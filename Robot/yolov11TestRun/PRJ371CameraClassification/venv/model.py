@@ -4,4 +4,4 @@ from ultralytics import YOLO
 model = YOLO("yolo11n-cls.pt")  
 
 # Train the model
-results = model.train(data="./yolov11TestRun/PRJ371CameraClassification/PRJDataset", epochs=100, imgsz=64)
+results = model.train(data="C:/Users/chanb/OneDrive/Documents/GitHub/Recycle_Sorting_Robotic_Arm/Robot/yolov11TestRun/PRJ371CameraClassification/yolov11TestRun/PRJ371CameraClassification/PRJDataset", epochs=100, imgsz=64)
