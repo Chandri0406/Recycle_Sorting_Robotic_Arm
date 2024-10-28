@@ -149,6 +149,44 @@ def basicLoop():
     rotateRight()
     sleep(1)
 
+# Function to smoothly move a servo from its current position to a target position
+def smooth_move_servo(servo_name, target_angle, step_delay=0.02):
+    current_angle = current_angles[servo_name]  # Fetch the current angle from the dictionary
+    
+    # Determine the direction to move
+    step = 1 if target_angle > current_angle else -1
+    
+    # Gradually move the servo in small steps
+    for angle in range(current_angle, target_angle + step, step):
+        move_servo(servo_name, angle)  # Use move_servo function to update position
+        sleep(step_delay)  # Delay to control smoothness of movement
+
+# Method to smoothly pick up a metal object in front of the robotic arm
+def PickUpMetal():
+    
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+ #   smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smooth_move_servo('base_servo', 70, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)   # Angle mid arm forward
+    smooth_move_servo('top_servo', 85, step_delay=0.05)# Lower top arm to approach object
+    #trying somthing
+    smooth_move_servo('grip_base_servo', current_angles['grip_base_servo'] + 50, step_delay=0.03)  # Adjust grip position
+    smooth_move_servo('grip_servo', 70, step_delay=0.03) #open
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 120, step_delay=0.05)
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # this will be to close the gripper and then to drop what it has
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo',  90, step_delay=0.03) #closed
+    smooth_move_servo('btm_servo', 70, step_delay=0.05)
+    smooth_move_servo('base_servo', 160, step_delay=0.05)
+    smooth_move_servo('grip_servo',  60, step_delay=0.03) #open
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
+    
+
 # Loop through different actions
 while True:
     pickUp()
