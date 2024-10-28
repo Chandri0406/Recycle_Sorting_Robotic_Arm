@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bluetooth Camera View</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style2.css">
+</head>
+<body>
+    <div id="main">
+        <div class="side camera">
+            <video id="camera-feed" autoplay></video>
+            <h3>Bluetooth Camera POV</h3>
+        </div>
+        <div class="side buttons">
+            <button class="button start" onclick="connectBluetoothCamera()">CONNECT</button>
+            <button class="button stop" onclick="stopCamera()">DISCONNECT</button>
+        </div>
+    </div>
+
+    <script>
+        let bluetoothDevice;
+
+        async function connectBluetoothCamera() {
+            try {
+                bluetoothDevice = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: ['your-camera-service-id'] }] // Replace with the correct service ID
+                });
+                const server = await bluetoothDevice.gatt.connect();
+                // Assuming the camera has a characteristic that provides a video stream
+                const video = document.getElementById('camera-feed');
+                video.srcObject = server; // Replace with actual camera feed handling
+            } catch (error) {
+                console.error("Error connecting to Bluetooth camera: " + error);
+            }
+        }
+
+        function stopCamera() {
+            if (bluetoothDevice && bluetoothDevice.gatt.connected) {
+                bluetoothDevice.gatt.disconnect();
+                document.getElementById('camera-feed').srcObject = null;
+            }
+        }
+    </script>
+</body>
+</html>

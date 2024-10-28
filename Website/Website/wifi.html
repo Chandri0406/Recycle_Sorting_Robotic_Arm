@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WiFi Camera View</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style2.css">
+</head>
+<body>
+    <div id="main">
+        <div class="side camera">
+            <video id="camera-feed" autoplay></video>
+            <h3>WiFi Camera POV</h3>
+        </div>
+        <div class="side buttons">
+            <button class="button start" onclick="connectWifiCamera()">CONNECT</button>
+            <button class="button stop" onclick="stopCamera()">DISCONNECT</button>
+        </div>
+    </div>
+
+    <script>
+        function connectWifiCamera() {
+            const video = document.getElementById('camera-feed');
+            video.src = 'http://your-camera-ip:port/stream'; // Replace with the camera's IP stream URL
+        }
+
+        function stopCamera() {
+            const video = document.getElementById('camera-feed');
+            video.src = ""; // Clear the video feed
+        }
+    </script>
+</body>
+</html>
