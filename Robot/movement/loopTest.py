@@ -187,6 +187,129 @@ def PickUpMetal():
     smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
     
 
+def PickUpCardboard():
+    
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+ #   smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)   # Angle mid arm forward
+    smooth_move_servo('top_servo', 85, step_delay=0.05)# Lower top arm to approach object
+    #trying somthing
+    smooth_move_servo('grip_base_servo', current_angles['grip_base_servo'] + 50, step_delay=0.03)  # Adjust grip position
+    smooth_move_servo('grip_servo', 60, step_delay=0.03) #open
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 115, step_delay=0.05)  #bend down part
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # this will be to close the gripper and then to drop what it has
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo',  120, step_delay=0.03) #closed
+    smooth_move_servo('mid_servo', 100, step_delay=0.05)
+    smooth_move_servo('btm_servo', 70, step_delay=0.05)
+    smooth_move_servo('base_servo', 35, step_delay=0.05)
+    smooth_move_servo('grip_servo',  60, step_delay=0.03) #open
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
+        # go back to orignial position:
+    smooth_move_servo('top_servo', 85, step_delay=0.05)
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+  
+  
+def PickUpPlastic():
+    
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+ #   smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)   # Angle mid arm forward
+    smooth_move_servo('top_servo', 85, step_delay=0.05)# Lower top arm to approach object
+    #trying somthing
+    smooth_move_servo('grip_base_servo', current_angles['grip_base_servo'] + 50, step_delay=0.03)  # Adjust grip position
+    smooth_move_servo('grip_servo', 60, step_delay=0.03) #open
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 135, step_delay=0.05)  #bend down part
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # this will be to close the gripper and then to drop what it has
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo',  120, step_delay=0.03) #closed
+    smooth_move_servo('mid_servo', 100, step_delay=0.05)
+    smooth_move_servo('btm_servo', 70, step_delay=0.05)
+    smooth_move_servo('base_servo', 50, step_delay=0.05)
+    smooth_move_servo('grip_servo',  60, step_delay=0.03) #open
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
+    
+        # go back to orignial position:
+    smooth_move_servo('top_servo', 85, step_delay=0.05)
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+  
+  
+def PickUpPaper():
+    
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+ #   smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)   # Angle mid arm forward
+    smooth_move_servo('top_servo', 85, step_delay=0.05)# Lower top arm to approach object
+    #trying somthing
+    smooth_move_servo('grip_base_servo', current_angles['grip_base_servo'] + 50, step_delay=0.03)  # Adjust grip position
+    smooth_move_servo('grip_servo', 60, step_delay=0.03) #open
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 135, step_delay=0.05)  #bend down part
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # this will be to close the gripper and then to drop what it has
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo',  120, step_delay=0.03) #closed
+    smooth_move_servo('mid_servo', 120, step_delay=0.05)
+    smooth_move_servo('btm_servo', 70, step_delay=0.05)    
+    smooth_move_servo('base_servo', 120, step_delay=0.05)    #rotate the base of the robot
+    smooth_move_servo('grip_servo',  50, step_delay=0.03) #open
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
+    # go back to orignial position:
+    smooth_move_servo('top_servo', 85, step_delay=0.05)
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    
+def PickUpGlass():
+    
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+ #   smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    smooth_move_servo('btm_servo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)   # Angle mid arm forward
+    smooth_move_servo('top_servo', 85, step_delay=0.05)# Lower top arm to approach object
+    #trying somthing
+    smooth_move_servo('grip_base_servo', current_angles['grip_base_servo'] + 50, step_delay=0.03)  # Adjust grip position
+    smooth_move_servo('grip_servo', 60, step_delay=0.03) #open
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 135, step_delay=0.05)  #bend down part
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # this will be to close the gripper and then to drop what it has
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo',  120, step_delay=0.03) #closed
+    smooth_move_servo('mid_servo', 120, step_delay=0.05)
+    smooth_move_servo('btm_servo', 70, step_delay=0.05)    
+    smooth_move_servo('base_servo', 0, step_delay=0.05)    #rotate the base of the robot
+    smooth_move_servo('grip_servo',  50, step_delay=0.03) #open
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) #closed
+    # go back to orignial position:
+    smooth_move_servo('top_servo', 85, step_delay=0.05)
+    smooth_move_servo('mid_servo', 80, step_delay=0.05)
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+
 # Loop through different actions
 while True:
     pickUp()
