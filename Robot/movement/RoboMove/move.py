@@ -1,7 +1,6 @@
 from machine import Pin, PWM
 from time import sleep
 
-
 # Initialize servos
 baseServo = PWM(Pin(16))
 btmServo = PWM(Pin(17))
@@ -149,7 +148,194 @@ def basicLoop():
     rotateRight()
     sleep(1)
 
+# Function to smoothly move a servo from its current position to a target position
+def smoothMoveServo(servo_name, target_angle, step_delay=0.02):
+    current_angle = current_angles[servo_name]  # Fetch the current angle from the dictionary
+    
+    # Determine the direction to move
+    step = 1 if target_angle > current_angle else -1
+    
+    # Gradually move the servo in small steps
+    for angle in range(current_angle, target_angle + step, step):
+        moveServo(servo_name, angle)  # Use move_servo function to update position
+        sleep(step_delay)  # Delay to control smoothness of movement
+
+# Method to smoothly pick up a metal object in front of the robotic arm
+def pickUpMetal():
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+    # smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smoothMoveServo('baseServo', 70, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smoothMoveServo('midServo', 80, step_delay=0.05)   # Angle mid arm forward
+    smoothMoveServo('topServo', 85, step_delay=0.05)# Lower top arm to approach object
+
+    #trying somthing
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)  # Adjust grip position
+    smoothMoveServo('gripServo', 70, step_delay=0.03) #open
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 120, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    # this will be to close the gripper and then to drop what it has
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 90, step_delay=0.03) #closed
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 160, step_delay=0.05)
+    smoothMoveServo('gripServo',  60, step_delay=0.03) #open
+    smoothMoveServo('gripServo', 90, step_delay=0.03) #closed
+
+def pickUpCardboard():
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 115, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 120, step_delay=0.03)
+    smoothMoveServo('midServo', 100, step_delay=0.05)
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 35, step_delay=0.05)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 90, step_delay=0.03)
+
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+
+def pickUpPlastic():
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 135, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 120, step_delay=0.03)
+    smoothMoveServo('midServo', 100, step_delay=0.05)
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 50, step_delay=0.05)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 90, step_delay=0.03)
+
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+
+def pickUpPaper():
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 135, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 120, step_delay=0.03)
+    smoothMoveServo('midServo', 120, step_delay=0.05)
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 120, step_delay=0.05)
+    smoothMoveServo('gripServo', 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 90, step_delay=0.03)
+
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+
+def pickUpGlass():
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 135, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo', 120, step_delay=0.03)
+    smoothMoveServo('midServo', 120, step_delay=0.05)
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 0, step_delay=0.05)
+    smoothMoveServo('gripServo', 50, step_delay=0.03)
+    smoothMoveServo('gripServo', 90, step_delay=0.03)
+
+    smoothMoveServo('topServo', 85, step_delay=0.05)
+    smoothMoveServo('midServo', 80, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+    smoothMoveServo('baseServo', 90, step_delay=0.05)
+
+    # Step 1: Align the base of the arm to center (assuming object is in front)
+    # smooth_move_servo('base_servo', 70, step_delay=0.05)  # Rotate base to center at 90 degrees
+
+    # Step 2: Lower the arm to reach the object's height
+    smoothMoveServo('baseServo', 70, step_delay=0.05)
+    smoothMoveServo('btmServo', 85, step_delay=0.05)  # Lower base shoulder slightly
+    smoothMoveServo('midServo', 80, step_delay=0.05)   # Angle mid arm forward
+    smoothMoveServo('topServo', 85, step_delay=0.05)# Lower top arm to approach object
+
+    #trying somthing
+    smoothMoveServo('gripBaseServo', current_angles['gripBaseServo'] + 50, step_delay=0.03)  # Adjust grip position
+    smoothMoveServo('gripServo', 70, step_delay=0.03) #open
+    smoothMoveServo('topServo', 20, step_delay=0.05)
+    smoothMoveServo('midServo', 120, step_delay=0.05)
+    smoothMoveServo('btmServo', 90, step_delay=0.05)
+
+    # this will be to close the gripper and then to drop what it has
+    smoothMoveServo('gripServo', 60, step_delay=0.03)
+    smoothMoveServo('gripServo',  90, step_delay=0.03) #closed
+    smoothMoveServo('btmServo', 70, step_delay=0.05)
+    smoothMoveServo('baseServo', 160, step_delay=0.05)
+    smoothMoveServo('gripServo',  60, step_delay=0.03) #open
+    smoothMoveServo('gripServo', 90, step_delay=0.03) #closed
+
+def detectAndSort(results):
+    for detection in results:
+        classID = detection['classID']
+        match classID:
+            case 0:
+                print("material detected")
+                #call method/function
+            case 1:
+                print("material detected")
+                #call method/function
+            case 2:
+                print("material detected")
+                #call method/function
+            case 3:
+                print("material detected")
+                #call method/function
+            case 4:
+                print("material detected")
+                #call method/function
+            case _:
+                idle()
+        
 
 # Loop through different actions
 while True:
-    pickUp()
+    try:
+        detectAndSort(results)    
+    except:
+        # exception code

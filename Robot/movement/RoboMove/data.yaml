@@ -1,0 +1,12 @@
+train: C:\Projects\YoloTest\train
+val: C:\Projects\YoloTest\val
+
+nc: 3
+names: ['metal', 'paper', 'plastic']
+
+roboflow:
+  workspace: roboarm-wxqrm
+  project: recycle-material-n7gkt
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/roboarm-wxqrm/recycle-material-n7gkt/dataset/2
