@@ -1,16 +1,20 @@
-from machine import Pin, PWM
+from machine import Pin, PWM, UART
 from time import sleep
+
+pin = Pin("LED", Pin.OUT)
 
 # Initialize servos
 baseServo = PWM(Pin(16))
 btmServo = PWM(Pin(17))
+
+uart = UART(1, baudrate=9600, tx=Pin(0), rx=Pin(1))
 
 # Pin setup for servo motors
 servo_pins = {
     'midServo': PWM(Pin(18)),
     'topServo': PWM(Pin(19)),
     'gripBaseServo': PWM(Pin(20)),
-    'gripServo': PWM(Pin(21)),
+    'gripServo': PWM(Pin(22)),
     'baseServo': baseServo,
     'btmServo': btmServo
 }
@@ -237,6 +241,10 @@ def pickUpPlastic():
     smoothMoveServo('baseServo', 90, step_delay=0.05)
 
 def pickUpPaper():
+    pin.toggle()
+    sleep(1)
+    pin.off()
+
     smoothMoveServo('baseServo', 90, step_delay=0.05)
     smoothMoveServo('btmServo', 85, step_delay=0.05)
     smoothMoveServo('midServo', 80, step_delay=0.05)
@@ -315,14 +323,14 @@ def detectAndSort(results):
         classID = detection['classID']
         match classID:
             case 0:
-                print("material detected")
-                #call method/function
+                print("metal detected")
+                pickUpMetal()
             case 1:
-                print("material detected")
-                #call method/function
+                print("paper detected")
+                pickUpPaper()
             case 2:
-                print("material detected")
-                #call method/function
+                print("plastic detected")
+                pickUpPlastic()
             case 3:
                 print("material detected")
                 #call method/function
@@ -331,11 +339,16 @@ def detectAndSort(results):
                 #call method/function
             case _:
                 idle()
-        
+ 
 
 # Loop through different actions
 while True:
     try:
+        #pickUpMetal()
         detectAndSort(results)    
-    except:
-        # exception code
+    except KeyError as e:
+        print(f"Key error: {e}")
+        idle()  # Reset to a safe position
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        idle()

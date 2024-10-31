@@ -1,5 +1,5 @@
-train: C:\Projects\YoloTest\train
-val: C:\Projects\YoloTest\val
+train: ..\train
+val: ..\val
 
 nc: 3
 names: ['metal', 'paper', 'plastic']
