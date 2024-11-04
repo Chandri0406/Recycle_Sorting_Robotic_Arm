@@ -7,7 +7,7 @@ pin = Pin("LED", Pin.OUT)
 baseServo = PWM(Pin(16))
 btmServo = PWM(Pin(17))
 
-uart = UART(1, baudrate=9600, tx=Pin(0), rx=Pin(1))
+# uart = UART(1, baudrate=9600, tx=Pin(0), rx=Pin(1))
 
 # Pin setup for servo motors
 servo_pins = {
@@ -54,7 +54,7 @@ def moveAllServosBy(offset):
 
 def idle():
     moveServo('baseServo', 90)
-    moveServo('btmServo', 90)
+    moveServo('btmServo', 150)
     moveServo('midServo', 90)
     moveServo('topServo', 90)
     moveServo('gripBaseServo', 90)
@@ -318,6 +318,7 @@ def pickUpGlass():
     smoothMoveServo('gripServo',  60, step_delay=0.03) #open
     smoothMoveServo('gripServo', 90, step_delay=0.03) #closed
 
+'''
 def detectAndSort(results):
     for detection in results:
         classID = detection['classID']
@@ -340,9 +341,13 @@ def detectAndSort(results):
             case _:
                 idle()
  
-
+'''
 # Loop through different actions
 while True:
+    idle()
+
+
+    '''
     try:
         #pickUpMetal()
         detectAndSort(results)    
@@ -352,3 +357,4 @@ while True:
     except Exception as e:
         print(f"Unexpected error: {e}")
         idle()
+'''
