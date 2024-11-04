@@ -15,11 +15,11 @@ for result in results:
     classes = result.names
 
     for box in boxes:
-        detected_class = classes[int(box.cls.item())]
+        detectedClass = classes[int(box.cls.item())]
         
         # Send detected class name or ID to the microcontroller
-        ser.write(f"{detected_class}\n".encode())  # Send data as bytes with newline for separation
-        print(f"Sent {detected_class} to microcontroller")
+        ser.write(f"{detectedClass}\n".encode())  # Send data as bytes with newline for separation
+        print(f"Sent {detectedClass} to microcontroller")
     #detectAndSort(result)
 
 ser.close
