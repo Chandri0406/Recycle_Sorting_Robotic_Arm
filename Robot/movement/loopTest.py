@@ -310,6 +310,35 @@ def PickUpGlass():
     smooth_move_servo('btm_servo', 90, step_delay=0.05)
     smooth_move_servo('base_servo', 90, step_delay=0.05)
 
+
+def Tester():
+ 
+     # Puts the arm in the upright position 
+    smooth_move_servo('base_servo', 90, step_delay=0.05) # THis is the rotation part of the arm
+    smooth_move_servo('btm_servo', 83, step_delay=0.05)  # This is the shoulder of the arm
+    smooth_move_servo('mid_servo', 85, step_delay=0.05)  # This is the elbow of the arm 
+    smooth_move_servo('top_servo', 90, step_delay=0.05)  # This is the lower wrist of the arm 
+    # Moves the arm to the position of the item and opens up the gripper
+    smooth_move_servo('grip_base_servo', 145, step_delay=0.03) 
+    smooth_move_servo('grip_servo', 60, step_delay=0.03) 
+    smooth_move_servo('top_servo', 20, step_delay=0.05)
+    smooth_move_servo('mid_servo', 135, step_delay=0.05)  #bend down part
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)
+    # Closes the gripper, picks up the item and moves to where it needs to be dropped and drops it.
+    smooth_move_servo('grip_servo', 60, step_delay=0.03)
+    smooth_move_servo('grip_servo', 120, step_delay=0.03) 
+    smooth_move_servo('mid_servo', 90, step_delay=0.05)
+    smooth_move_servo('btm_servo', 90, step_delay=0.05)    
+    smooth_move_servo('base_servo', 120, step_delay=0.05)    
+    smooth_move_servo('grip_servo', 50, step_delay=0.03) 
+    smooth_move_servo('grip_servo', 90, step_delay=0.03) 
+    # Moves it back to orignial position after droping the item:
+    smooth_move_servo('top_servo', 80, step_delay=0.05) 
+    smooth_move_servo('btm_servo', 80, step_delay=0.05)
+    smooth_move_servo('mid_servo', 85, step_delay=0.05)
+    smooth_move_servo('base_servo', 90, step_delay=0.05)
+    smooth_move_servo('grip_base_servo', 140, step_delay=0.03) 
+
 # Loop through different actions
 while True:
     pickUp()
