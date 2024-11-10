@@ -4,7 +4,7 @@ import torch
 import serial
 #from move import detectAndSort
 
-ser = serial.Serial("COM7", 9600)
+ser = serial.Serial("COM9", 9600)
 
 # Load our custom model
 model = YOLO("../runs/detect/train3/weights/best.pt")
