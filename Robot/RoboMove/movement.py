@@ -8,12 +8,12 @@ uart.init(bits=8, parity=None, stop=2)
 
 # Pin setup for servo motors
 servoPins = {
+    'baseServo': PWM(Pin(16)),
+    'btmServo': PWM(Pin(17)),
     'midServo': PWM(Pin(18)),
     'topServo': PWM(Pin(19)),
     'gripBaseServo': PWM(Pin(20)),
-    'gripServo': PWM(Pin(21)),
-    'baseServo': PWM(Pin(16)),
-    'btmServo': PWM(Pin(17))
+    'gripServo': PWM(Pin(21))
 }
 
 # Function to set the PWM frequency and duty cycle for a servo
@@ -194,8 +194,8 @@ while True:
 
     if uart.any():
 
-        matID = uart.read()
-        print(f"Signal received: {matID}")
+       matID = uart.read(1)[0]
+       print(f"Signal received: {matID}")
 
     if matID is not None:
         if matID == 0:
