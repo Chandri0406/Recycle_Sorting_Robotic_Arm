@@ -3,7 +3,9 @@ from time import sleep
 
 pinLED = Pin("LED", Pin.OUT)
 
-uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1))
+#ser = serial.Serial("COM9", 9600, timeout=1)
+
+uart = UART(0, 9600, tx=Pin(0), rx=Pin(1))
 uart.init(bits=8, parity=None, stop=2)
 
 # Pin setup for servo motors
@@ -25,6 +27,7 @@ def setServoAngle(servo, angle):
 def setupServos():
     for servo in servoPins.values():
         servo.freq(50)
+    
 
 # Initialize servos and set them all to their default positions
 setupServos()
@@ -79,6 +82,7 @@ def searchForMat():
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
     smoothMoveServo('midServo', 120, stepDelay=0.05)
     smoothMoveServo('topServo', 20, stepDelay=0.05)
+    sleep(10)
 
 def blinkLED():
     pinLED.toggle()
@@ -190,34 +194,42 @@ def pickUpGlass():
 
 # Loop through different actions
 while True:
+
+    sleep(2)
+    '''
+    if matID == b'6510':
+        print("Hello World")
+        defualtPos()
+
+    elif matID == b'6610':
+        print("glass")
+    '''
+
     matID = None
 
     if uart.any():
-
-       matID = uart.read(1)[0]
+       matID = uart.read()
        print(f"Signal received: {matID}")
+       matID = matID[:4]
 
-    if matID is not None:
-        if matID == 0:
-            print("Cardboard detected")
-            pickUpCardboard()
-        elif matID == 1:
-            print("Glass detected")
-            pickUpGlass()
-        elif matID == 2: 
-            print("Metal detected")
-            pickUpMetal()
-        elif matID == 3: 
-            print("Paper detected")
-            pickUpPaper()
-        elif matID == 4:
-            print("Plastic detected")
-            pickUpPlastic()
-        else:
-            print(f"Unknown object: {matID}")
-            defualtPos()
+    if matID == b'6510':
+        print("Cardboard detected")
+        pickUpCardboard()
+    elif matID == b'6610':
+        print("Glass detected")
+        pickUpGlass()
+    elif matID == b'6710':
+        print("Metal detected")
+        pickUpMetal()
+    elif matID == b'6810': 
+        print("Paper detected")
+        pickUpPaper()
+    elif matID == b'6910':
+        print("Plastic detected")
+        pickUpPlastic()
     else:
-        print("Error receiving object data")
+        print(f"Unknown object: {matID}")
         defualtPos()
+
 
     sleep(2)
