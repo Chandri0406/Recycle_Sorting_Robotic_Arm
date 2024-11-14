@@ -1,12 +1,8 @@
 from machine import Pin, PWM, UART
 from time import sleep
 
-pinLED = Pin("LED", Pin.OUT)
-
-#ser = serial.Serial("COM9", 9600, timeout=1)
-
 uart = UART(0, 9600, tx=Pin(0), rx=Pin(1))
-uart.init(bits=8, parity=None, stop=2)
+uart.init(bits=8, parity=None, stop=1)
 
 # Pin setup for servo motors
 servoPins = {
@@ -28,7 +24,6 @@ def setupServos():
     for servo in servoPins.values():
         servo.freq(50)
     
-
 # Initialize servos and set them all to their default positions
 setupServos()
 currentAngles = {
@@ -73,33 +68,27 @@ def defualtPos():
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.05)
     smoothMoveServo('gripServo', 110, stepDelay=0.03)
 
-    sleep(5)
+    sleep(2)
     searchForMat()
 
 # Function to lower the arm to search for materials
 def searchForMat():
-    smoothMoveServo('baseServo', 90, stepDelay=0.05)
+    smoothMoveServo('baseServo', 75, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
-    smoothMoveServo('midServo', 120, stepDelay=0.05)
+    smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('topServo', 20, stepDelay=0.05)
-    sleep(10)
-
-def blinkLED():
-    pinLED.toggle()
-    sleep(3)
-    pinLED.off()
+    sleep(15)
 
 # Function to smoothly pick up a metal object in front of the robotic arm
 def pickUpMetal():
-    blinkLED()
 
-    searchForMat()
+    #searchForMat()
 
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
-    smoothMoveServo('midServo', 120, stepDelay=0.05)
+    smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
     smoothMoveServo('gripServo', 90, stepDelay=0.03) # closed
 
@@ -112,8 +101,8 @@ def pickUpMetal():
     defualtPos()
 
 def pickUpCardboard():
-    blinkLED()
-    searchForMat()
+
+    #searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -132,8 +121,8 @@ def pickUpCardboard():
     defualtPos()
 
 def pickUpPlastic():
-    blinkLED()
-    searchForMat()
+
+    #searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -152,9 +141,8 @@ def pickUpPlastic():
     defualtPos()
 
 def pickUpPaper():
-    blinkLED()
 
-    searchForMat()
+    #searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -173,8 +161,8 @@ def pickUpPaper():
     defualtPos()
 
 def pickUpGlass():
-    blinkLED()
-    searchForMat()
+
+    #searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -194,17 +182,6 @@ def pickUpGlass():
 
 # Loop through different actions
 while True:
-
-    sleep(2)
-    '''
-    if matID == b'6510':
-        print("Hello World")
-        defualtPos()
-
-    elif matID == b'6610':
-        print("glass")
-    '''
-
     matID = None
 
     if uart.any():
@@ -230,6 +207,3 @@ while True:
     else:
         print(f"Unknown object: {matID}")
         defualtPos()
-
-
-    sleep(2)

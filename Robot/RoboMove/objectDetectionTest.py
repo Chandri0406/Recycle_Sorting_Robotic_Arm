@@ -10,8 +10,8 @@ model = YOLO("../runs/detect/train2/weights/best.pt")
 ser = serial.Serial("COM13", 9600, timeout=1)
 
 # Start video stream and FPS counter
-cap = cv2.VideoCapture(0)
-cooldown = 10
+cap = cv2.VideoCapture(1)
+cooldown = 40
 
 lastDetectedTime = time.time()
 
@@ -71,25 +71,8 @@ while True:
                 cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-                '''
-                # Only process if confidence is above 85%
-                if confidence >= 0.70 and label in materialIDS:
-                    #Start or reset detection timer if this is the first detection or a different object
-                    if label != currentLabel:
-                        detectedInFrame = time.time()
-                        currentLabel = label
-                    elif detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Object has been detected continuously for the required duration
-                        ser.write(materialIDS[label].encode())
-                        print(f"Sent ID {materialIDS[label]} for {label} after {detectedTime} seconds.")
-                        detectedInFrame = None  # Reset detection timer
-                        currentLabel = None
-                    '''
-
-
                 if confidence >= 0.40 and label == "cardboard":
-                    #if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Increment count for detected material
+                    # Increment count for detected material
                     material_counts['cardboard'] += 1
 
                     # Send material ID via UART
@@ -106,9 +89,8 @@ while True:
                 
                 
                 elif confidence >= 0.40 and label == "glass":
-                    #if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Increment count for detected material
-                        #material_counts[label] += 1
+                    # Increment count for detected material
+                    material_counts[label] += 1
 
                         # Send material ID via UART
                     ser.write(b'B\n')
@@ -123,9 +105,8 @@ while True:
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
                 elif confidence >= 0.40 and label == "metal":
-                    #if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Increment count for detected material
-                        #material_counts[label] += 1
+                    # Increment count for detected material
+                    material_counts[label] += 1
 
                         # Send material ID via UART
                     ser.write(b'C\n')
@@ -140,9 +121,8 @@ while True:
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
                 elif confidence >= 0.40 and label == "paper":
-                    #if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Increment count for detected material
-                        #material_counts[label] += 1
+                    # Increment count for detected material
+                    material_counts[label] += 1
 
                     # Send material ID via UART
                     ser.write(b'D\n')
@@ -157,9 +137,8 @@ while True:
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
                 elif confidence >= 0.40 and label == "plastic":
-                    #if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        # Increment count for detected material
-                        #material_counts[label] += 1
+                    #Increment count for detected material
+                    material_counts[label] += 1
 
                     # Send material ID via UART
                     ser.write(b'E\n')
@@ -193,4 +172,4 @@ fps.stop()
 cap.release()
 cv2.destroyAllWindows()
 
-print(f"Sorted Materials: {sortedMaterials}")
+print(f"Sorted Materials: {material_counts}")
