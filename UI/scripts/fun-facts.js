@@ -1,73 +1,6 @@
-
-// Pie chart data
-const ctx = document.getElementById('myPieChart').getContext('2d');
-const myPieChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['Recyclable', 'Compostable', 'Trash'],
-        datasets: [{
-            label: 'Waste Material Distribution',
-            data: [50, 30, 20], // Sample data values            
-            backgroundColor: ['rgb(64, 82, 116)', 'rgb(97, 197, 135)', 'rgb(234, 211, 83)'], // Yellow shades
-            borderWidth: 2,
-            borderColor: 'white',
-            hoverBackgroundColor: 'rgba(64, 82, 116, 0.8)'
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    font: {
-                        size: 14,
-                        style: 'italic'
-                    },
-                    color: 'antiquewhite',
-                    boxWidth: 15
-                }
-            },
-            title: {
-                display: true,
-                text: 'Waste Material Distribution',
-                color: 'antiquewhite',
-                font: {
-                    size: 20,
-                    weight: 'bold'
-                },
-                padding: {
-                    top: 10,
-                    bottom: 30
-                }
-            },
-            tooltip: {
-                backgroundColor: 'rgba(0,0,0,0.7)',
-                cornerRadius: 8,
-                bodyFont: {
-                    size: 14
-                },
-                titleFont: {
-                    size: 16,
-                    weight: 'bold'
-                }
-            },
-            animation: {
-                duration: 2500,    // Animation duration in milliseconds
-                easing: 'easeOutElastic',  // Animation easing function (e.g., 'linear', 'easeInQuad', etc.)
-            },
-
-        }
-    }
-});
-
-// Set width and height in JavaScript
-document.getElementById('myPieChart').width = 400;
-document.getElementById('myPieChart').height = 400;
-
 // Function to read the Word document and extract fun facts
 function loadFunFactsFromDoc() {
-    fetch('FunFacts.docx')
+    fetch('files/FunFacts.docx')
         .then(response => response.arrayBuffer())
         .then(data => {
             mammoth.extractRawText({ arrayBuffer: data })
@@ -110,7 +43,7 @@ let funFacts = [];
 
 // Function to read the Word document and extract fun facts
 function loadFunFactsFromDoc() {
-    fetch('FunFacts.docx')
+    fetch('files/FunFacts.docx')
         .then(response => response.arrayBuffer())
         .then(data => {
             // Use Mammoth to extract text from the Word document
