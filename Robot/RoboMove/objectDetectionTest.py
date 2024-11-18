@@ -2,24 +2,14 @@ from ultralytics import YOLO
 from imutils.video import FPS
 import cv2
 import serial
-import time
 
 # Load our custom model
 model = YOLO("../runs/detect/train2/weights/best.pt")
 
-ser = serial.Serial("COM13", 9600, timeout=1)
+ser = serial.Serial("COM9", 9600)
 
 # Start video stream and FPS counter
 cap = cv2.VideoCapture(1)
-cooldown = 40
-
-lastDetectedTime = time.time()
-
-detectedTime = 5
-
-detectedInFrame = None
-
-currentLabel = None
 
 #setting width and heigh of camera
 cap.set(3, 640)
@@ -36,14 +26,6 @@ material_counts = {
     "plastic": 0,
 }
 
-materialIDS = {
-    "cardboard": 'A\n',
-    "glass": 'B\n',
-    "metal": 'C\n',
-    "paper": 'D\n',
-    "plastic": 'E\n',
-}
-
 sortedMaterials = []
 
 while True:
@@ -52,113 +34,38 @@ while True:
         break
 
     results = model(frame, stream=True)
-    currentTime = time.time()
-    detectedInFrame = False
 
-    if currentTime - lastDetectedTime > cooldown:
+    # Extract bounding boxes from results
+    for result in results:
+        boxes = result.boxes
+        for box in boxes:
+            cls_id = int(box.cls[0].item())  # Class ID of detected object
+            label = model.names[cls_id] if cls_id < len(model.names) else "Unknown"
+            confidence = box.conf[0].item()
 
-        # Extract bounding boxes from results
-        for result in results:
-            boxes = result.boxes
-            for box in boxes:
-                cls_id = int(box.cls[0].item())
-                label = model.names[cls_id] if cls_id < len(model.names) else "Unknown"
-                confidence = box.conf[0].item()
+            # Display bounding box and label on frame
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
+            cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-                # Display bounding box and label on frame
-                x1, y1, x2, y2 = map(int, box.xyxy[0]) 
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+    # Reset frame counts if no object detected for some time (adjust timeout as needed)
+    no_detection_timeout = 10  # Frames without detection to reset counts
+    for material, count in material_counts.items():
+        if count == 0:
+            material_counts[material] += 1
+            print(material_counts[material])
+        else:
+            material_counts[material] -= 1
+            print(material_counts[material])
 
-                if confidence >= 0.40 and label == "cardboard":
-                    # Increment count for detected material
-                    material_counts['cardboard'] += 1
-
-                    # Send material ID via UART
-                    ser.write(b'A\n')
-                    print(f"Sent ID {materialIDS[label]} for {label}")
-                    lastDetectedTime = currentTime
-                    detectedInFrame = None
-
-                    # Display bounding box and label on frame
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                
-                
-                elif confidence >= 0.40 and label == "glass":
-                    # Increment count for detected material
-                    material_counts[label] += 1
-
-                        # Send material ID via UART
-                    ser.write(b'B\n')
-                    print(f"Sent ID {materialIDS[label]} for {label}")
-                    lastDetectedTime = currentTime
-                    detectedInFrame = None
-
-                        # Display bounding box and label on frame
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-                elif confidence >= 0.40 and label == "metal":
-                    # Increment count for detected material
-                    material_counts[label] += 1
-
-                        # Send material ID via UART
-                    ser.write(b'C\n')
-                    print(f"Sent ID {materialIDS[label]} for {label}")
-                    lastDetectedTime = currentTime
-                    detectedInFrame = None
-
-                        # Display bounding box and label on frame
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-                elif confidence >= 0.40 and label == "paper":
-                    # Increment count for detected material
-                    material_counts[label] += 1
-
-                    # Send material ID via UART
-                    ser.write(b'D\n')
-                    print(f"Sent ID {materialIDS[label]} for {label}")
-                    lastDetectedTime = currentTime
-                    detectedInFrame = None
-
-                    # Display bounding box and label on frame
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-                elif confidence >= 0.40 and label == "plastic":
-                    #Increment count for detected material
-                    material_counts[label] += 1
-
-                    # Send material ID via UART
-                    ser.write(b'E\n')
-                    print(f"Sent ID {materialIDS[label]} for {label}")
-                    lastDetectedTime = currentTime
-                    detectedInFrame = None
-
-                    # Display bounding box and label on frame
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(frame, f"{label} {confidence:.2f}", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                
-
-                else:
-                    if detectedInFrame and (time.time() - detectedInFrame) >= detectedTime:
-                        ser.write(b'F\n')
-                        print(f"Failed to send ID {materialIDS[label]}")
-                        lastDetectedTime = currentTime
-                        detectedInFrame = None
+     # Send serial data and update sorted materials list only after 20 frames of detection
+    for material, count in material_counts.items():
+        if count > 0:  # Material detected and frame count not depleted
+            ser.write(bytes(f'b {material}', 'utf-8'))
+            print(f'b {material}')
+            sortedMaterials.append({"label": material, "count": 1})
+            material_counts[material] -= 1  # Decrement count after sending data
 
     # Display frame
     cv2.imshow("Object Detection", frame)
@@ -172,4 +79,4 @@ fps.stop()
 cap.release()
 cv2.destroyAllWindows()
 
-print(f"Sorted Materials: {material_counts}")
+print(f"Sorted Materials: {sortedMaterials}")

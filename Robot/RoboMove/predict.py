@@ -4,7 +4,7 @@ import torch
 
 # Load our custom model
 model = YOLO("../runs/detect/train2/weights/best.pt")
-results = model(0, show=True, stream= True)
+results = model(1, show=True, stream= True)
 
 for result in results:
     boxes = result.boxes

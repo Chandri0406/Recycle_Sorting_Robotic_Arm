@@ -4,69 +4,40 @@
     <title>Main page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles/home.css">
+    <link rel="stylesheet" href="./styles/style1.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script> <!-- Include Mammoth.js -->
-    <script src=".//scripts/fun-facts.js" ></script><!-- script for fun facts -->
-
-    <script src="./scripts/camera.js"></script> <!-- Toggle view script -->
+    <script src="./scripts/script.js" defer></script> <!-- Ensure your script.js is referenced -->
 </head>
 <body>
     <div id="main">
-        
-        <!-- left box content -->
-        <div class="box left"> 
-             <!-- Toggle button with icon -->
-            <div class="box-btn" >
-                <button id="toggle-button" onclick="toggleView()">
-                    <i class="icon">&#x21bb;</i> <!-- Circular arrow icon -->
-                </button>
-            </div>
-            <div id="chart-section" class="box-child pie-chart">      
+        <div class="box left">      
+            <div class="box-child pie-chart">
                 <canvas id="myPieChart" class="chart-placeholder"></canvas>
-            </div>
-            <div id="camera-section" class="box-child camera hidden">
-                <div class="side camera"> 
-                    <video id="camera-feed" autoplay></video>
-                    <h3>Camera POV</h3>
-                </div>
-                <div class="side buttons">
-                    <button class="button start" onclick="startCameraAndOpenPage()">START</button>
-                    <button class="button stop" onclick="stopCamera()">STOP</button>
-                </div>
             </div>
             <p class="headings">Fun facts about waste material</p>
             <div class="box-child facts">
                 <ul>
-                    <li>Loading fun facts...</li>
+                    <li>Loading fun facts...</li> <!-- Placeholder for fun facts -->
                 </ul>
             </div>
         </div>
-        <!-- Right box content -->
         <div class="box right">
-            <p class="headings">Glass</p>
-            <div class="box-child glass">
+            <p class="headings">Recycle Material</p>
+            <div class="box-child recycle">
                 <!-- Content for recyclable materials -->
             </div>
-            <p class="headings">Metal</p>
-            <div class="box-child metal">
-                <!-- Content for recyclable materials -->
+            <p class="headings">Compostable Material</p>
+            <div class="box-child compost">
+                <!-- Content for compostable materials -->
             </div>
-            <p class="headings">Plastic</p>
-            <div class="box-child plastic">
-                <!-- Content for recyclable materials -->
-            </div>
-            <p class="headings">Paper</p>
-            <div class="box-child paper">
-                <!-- Content for recyclable materials -->
-            </div>
-            <p class="headings">Cardboard</p>
-            <div class="box-child cardboard">
-                <!-- Content for recyclable materials -->
+            <p class="headings">Trash</p>
+            <div class="box-child trash">
+                <!-- Content for trash -->
             </div>
         </div>
     </div>
-    <!-- script for pie chart-->
-    <script src=".//scripts/pie-chart.js" ></script>
+
+    <script src=".//scripts/script.js"></script>
 </body>
 </html>

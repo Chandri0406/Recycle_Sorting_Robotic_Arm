@@ -1,0 +1,119 @@
+/* Global styling */
+body {
+    background-color: rgb(40, 40, 40);
+    font-family: Verdana, sans-serif;
+}
+
+#main, .box, .box-child {
+    background-color: rgb(40, 40, 40);
+    color: antiquewhite;
+    outline: 0.2ch solid antiquewhite;
+    border-radius: 1ch;
+}
+
+/* Specific backgrounds for material categories */
+.compost {
+    background-color: rgb(234, 211, 83);
+}
+
+.trash {
+    background-color: rgb(97, 197, 135);
+}
+
+.recycle {
+    background-color: rgb(64, 82, 116);
+}
+
+/* Chart styling */
+.pie-chart, #main {
+    background: none;
+    outline: none;
+}
+
+canvas {
+    color: antiquewhite;
+}
+
+/* Layout and positioning */
+#main {
+    display: flex;
+    height: 80ch;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.box {
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    overflow: hidden;
+}
+.left {
+    width: 60%;
+}
+.right {
+    width: 38%;
+}
+.box-child, .facts {
+    width: 95%;
+    margin: auto;
+}
+
+
+.recycle, .compost, .trash {
+    height: 27%;
+}
+
+.facts {
+    height: 30%;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-bottom: 2ch;
+    margin-top: 1ch;
+}
+
+/* Headings and Pie Chart */
+.headings {
+    margin: 0.5ch auto;
+    text-align: center;
+}
+
+.pie-chart {
+    width: 50vw;
+    height: 50vw;
+    min-width: 20ch;
+    min-height: 20ch;
+}
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive for larger screens */
+@media all and (min-width: 110ch) {
+    .pie-chart {
+        width: 43ch;
+        height: 43ch;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: antiquewhite;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: antiquewhite;
+}

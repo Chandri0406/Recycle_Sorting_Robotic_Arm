@@ -1,17 +1,19 @@
 from machine import Pin, PWM, UART
 from time import sleep
 
-uart = UART(0, 9600, tx=Pin(0), rx=Pin(1))
-uart.init(bits=8, parity=None, stop=1)
+pinLED = Pin("LED", Pin.OUT)
+
+uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1))
+uart.init(bits=8, parity=None, stop=2)
 
 # Pin setup for servo motors
 servoPins = {
-    'baseServo': PWM(Pin(16)),
-    'btmServo': PWM(Pin(17)),
     'midServo': PWM(Pin(18)),
     'topServo': PWM(Pin(19)),
     'gripBaseServo': PWM(Pin(20)),
-    'gripServo': PWM(Pin(21))
+    'gripServo': PWM(Pin(21)),
+    'baseServo': PWM(Pin(16)),
+    'btmServo': PWM(Pin(17))
 }
 
 # Function to set the PWM frequency and duty cycle for a servo
@@ -23,7 +25,7 @@ def setServoAngle(servo, angle):
 def setupServos():
     for servo in servoPins.values():
         servo.freq(50)
-    
+
 # Initialize servos and set them all to their default positions
 setupServos()
 currentAngles = {
@@ -68,27 +70,32 @@ def defualtPos():
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.05)
     smoothMoveServo('gripServo', 110, stepDelay=0.03)
 
-    sleep(2)
+    sleep(5)
     searchForMat()
 
 # Function to lower the arm to search for materials
 def searchForMat():
-    smoothMoveServo('baseServo', 75, stepDelay=0.05)
+    smoothMoveServo('baseServo', 90, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
-    smoothMoveServo('midServo', 100, stepDelay=0.05)
+    smoothMoveServo('midServo', 120, stepDelay=0.05)
     smoothMoveServo('topServo', 20, stepDelay=0.05)
-    sleep(15)
+
+def blinkLED():
+    pinLED.toggle()
+    sleep(3)
+    pinLED.off()
 
 # Function to smoothly pick up a metal object in front of the robotic arm
 def pickUpMetal():
+    blinkLED()
 
-    #searchForMat()
+    searchForMat()
 
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
-    smoothMoveServo('midServo', 100, stepDelay=0.05)
+    smoothMoveServo('midServo', 120, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
     smoothMoveServo('gripServo', 90, stepDelay=0.03) # closed
 
@@ -101,8 +108,8 @@ def pickUpMetal():
     defualtPos()
 
 def pickUpCardboard():
-
-    #searchForMat()
+    blinkLED()
+    searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -121,8 +128,8 @@ def pickUpCardboard():
     defualtPos()
 
 def pickUpPlastic():
-
-    #searchForMat()
+    blinkLED()
+    searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -141,8 +148,9 @@ def pickUpPlastic():
     defualtPos()
 
 def pickUpPaper():
+    blinkLED()
 
-    #searchForMat()
+    searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -161,8 +169,8 @@ def pickUpPaper():
     defualtPos()
 
 def pickUpGlass():
-
-    #searchForMat()
+    blinkLED()
+    searchForMat()
     
     # Pick up what is infront of it
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
@@ -185,25 +193,31 @@ while True:
     matID = None
 
     if uart.any():
-       matID = uart.read()
-       print(f"Signal received: {matID}")
-       matID = matID[:4]
 
-    if matID == b'6510':
-        print("Cardboard detected")
-        pickUpCardboard()
-    elif matID == b'6610':
-        print("Glass detected")
-        pickUpGlass()
-    elif matID == b'6710':
-        print("Metal detected")
-        pickUpMetal()
-    elif matID == b'6810': 
-        print("Paper detected")
-        pickUpPaper()
-    elif matID == b'6910':
-        print("Plastic detected")
-        pickUpPlastic()
+        matID = uart.read()
+        print(f"Signal received: {matID}")
+
+    if matID is not None:
+        if matID == 0:
+            print("Cardboard detected")
+            pickUpCardboard()
+        elif matID == 1:
+            print("Glass detected")
+            pickUpGlass()
+        elif matID == 2: 
+            print("Metal detected")
+            pickUpMetal()
+        elif matID == 3: 
+            print("Paper detected")
+            pickUpPaper()
+        elif matID == 4:
+            print("Plastic detected")
+            pickUpPlastic()
+        else:
+            print(f"Unknown object: {matID}")
+            defualtPos()
     else:
-        print(f"Unknown object: {matID}")
+        print("Error receiving object data")
         defualtPos()
+
+    sleep(2)
