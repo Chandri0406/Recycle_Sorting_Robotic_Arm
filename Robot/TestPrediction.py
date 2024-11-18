@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 import cv2
 import time
-from sharedData import materialCounts
+#from sharedData import materialCounts
 
 # Load our custom model
 model = YOLO("../runs/detect/train5/weights/best.pt")
@@ -11,6 +11,15 @@ cap = cv2.VideoCapture(0)
 cooldown = 20
 
 lastDetectedTime = time.time()
+
+materialCounts = {
+    "cardboard": 0,
+    "glass": 0,
+    "metal": 0,
+    "paper": 0,
+    "plastic": 0,
+}
+
 while True:
     success, frame = cap.read()
     results = model(frame, stream=True)
