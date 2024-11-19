@@ -1,0 +1,239 @@
+/* Global styling */
+body {
+    background-color: rgb(40, 40, 40);
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#main, .box, .box-child {
+    background-color: rgb(40, 40, 40);
+    color: antiquewhite;
+    outline: 0.2ch solid antiquewhite;
+    border-radius: 1ch;
+    box-sizing: border-box;
+}
+
+/* Specific backgrounds for material categories */
+.glass {
+    background-color: #99CCFF;
+}
+
+.metal {
+    background-color: #A0A0A0;
+}
+
+.plastic {
+    background-color: #CCFF99;
+}
+
+.paper {
+    background-color: #FFFFDC;
+}
+
+.cardboard {
+    background-color: #FFCC99;
+}
+
+/* Chart styling */
+.pie-chart, #main {
+    background: none;
+    outline: none;
+}
+
+canvas {
+    color: antiquewhite;
+}
+
+/* Layout and positioning */
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+    gap: 2ch;
+    padding: 1ch;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 1ch;
+}
+
+.left {
+    flex-grow: 4;
+    order: 1;
+}
+
+.right {
+    padding: 3ch;
+    flex-grow: 1;
+    order: 2;
+}
+
+
+/* Box child adjustments for dynamic spacing */
+.box-child, .facts {
+    width: 100%;
+    padding: 1ch;
+    margin: auto;
+    display: block;
+    box-sizing: border-box;
+}
+.right .box-child{
+    width: 4ch;
+    height: 4ch;
+    color: black;
+    font-weight: 700;
+
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+/* Headings and Pie Chart */
+.headings {
+    margin: 0.5ch auto;
+    text-align: center;
+}
+
+.pie-chart {
+    width: 100%;
+    max-width: 50vw;
+    min-width: 20ch;
+    height: auto;
+}
+
+canvas {
+    width: 100%;
+    height: auto;
+}
+
+/* Responsive adjustments */
+@media (min-width: 70ch) {
+    #main {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .left{
+        flex: 3 1 90%;
+    }
+    .right {
+        flex: 1 1 10%;
+    }
+    .box {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 110ch) {
+    .pie-chart {
+        width: 43ch;
+        height: 43ch;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: antiquewhite;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: antiquewhite;
+}
+
+/* Additional styles for camera section */
+.camera {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1ch;
+    max-width: 80%;
+    min-height: 100%;
+}
+
+.camera video {
+    width: 100%;
+    max-width: 60ch;
+    border-radius: 0.5ch;
+}
+
+.buttons {
+    display: flex;
+    gap: 1ch;
+}
+
+.button {
+    padding: 1ch 1ch;
+    border: none;
+    border-radius: 0.5ch;
+    cursor: pointer;
+    background-color: #5a5a5a;
+    color: antiquewhite;
+}
+
+.button.start {
+    background-color: #4caf50;
+}
+
+.button.stop {
+    background-color: #f44336;
+}
+
+/* Utility class for hiding elements */
+.hidden {
+    display: none;
+}
+/* Styling for the floating toggle button */
+#toggle-button {
+    position: absolute;
+    top: 1ch;
+    right: 1ch;
+    background-color: #5a5a5a;
+    color: antiquewhite;
+    border: none;
+    border-radius: 50%;
+    width: 5ch;
+    height: 5ch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#toggle-button .icon {
+    font-size: 1.5ch;
+    pointer-events: none;
+}
+
+/* Hover effect for the button */
+#toggle-button:hover {
+    background-color: #4caf50;
+}
+
+/* Positioning adjustments for box-child */
+.box-btn {
+    position: relative;
+    padding-top: 2ch; /* Adds padding to avoid overlap with the button */
+}
+
+/* Adjustments to icon style within the button */
+.icon {
+    font-size: 1.5ch;
+}

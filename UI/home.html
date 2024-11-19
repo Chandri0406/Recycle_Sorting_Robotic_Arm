@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script> <!-- Include Mammoth.js -->
+    <script src=".//scripts/fun-facts.js" ></script><!-- script for fun facts -->
+
+    <script src="./scripts/camera.js"></script> <!-- Toggle view script -->
+</head>
+<body>
+    <div id="main">
+        
+        <!-- left box content -->
+        <div class="box left"> 
+             <!-- Toggle button with icon -->
+            <div class="box-btn" >
+                <button id="toggle-button" onclick="toggleView()">
+                    <i class="icon">&#x21bb;</i> <!-- Circular arrow icon -->
+                </button>
+            </div>
+            <div id="chart-section" class="box-child pie-chart">      
+                <canvas id="myChart" class="chart-placeholder"></canvas>
+            </div>
+            <div id="camera-section" class="box-child camera hidden">
+                <div class="side camera"> 
+                    <video id="camera-feed" autoplay></video>
+                    <h3>Camera POV</h3>
+                </div>
+                <div class="side buttons">
+                    <button class="button start" onclick="startCameraAndOpenPage()">START</button>
+                    <button class="button stop" onclick="stopCamera()">STOP</button>
+                </div>
+            </div>
+            <p class="headings">Fun facts about waste material</p>
+            <div class="box-child facts">
+                <ul>
+                    <li>Loading fun facts...</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Right box content -->
+        <div class="box right">
+            <p class="headings">Glass</p>
+            <div class="box-child glass">
+                <p class="counter-glass">0</p>
+            </div>
+            <p class="headings">Metal</p>
+            <div class="box-child metal">
+                <p class="counter-metal">0</p>
+            </div>
+            <p class="headings">Plastic</p>
+            <div class="box-child plastic">
+                <p class="counter-plastic">0</p>
+            </div>
+            <p class="headings">Paper</p>
+            <div class="box-child paper">
+                <p class="counter-paper">0</p>
+            </div>
+            <p class="headings">Cardboard</p>
+            <div class="box-child cardboard">
+                <p class="counter-cardboard">0</p>
+            </div>
+        </div>
+    </div>
+    <!-- script for pie chart-->
+    <script src=".//scripts/pie-chart.js" ></script>
+    
+    <script src=".//scripts/counter.js"></script>
+</body>
+</html>
