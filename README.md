@@ -1,5 +1,6 @@
-# Recycle_Sorting_Robotic_Arm
-A robotic arm that can sort by detection, picking and placing.
+# Recycle_Sorting_Robotic_Arm dewald-latest
+
+This is just the UI folder. Don't add anything to it, any other python files you add outside of this. 
 
 first run a server in the UI folder using "python -m http.server 8000" or similar 
 then run your app.py file inside the API folder
