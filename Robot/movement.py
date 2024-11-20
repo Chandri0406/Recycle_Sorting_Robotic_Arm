@@ -11,7 +11,7 @@ servoPins = {
     'midServo': PWM(Pin(18)),
     'topServo': PWM(Pin(19)),
     'gripBaseServo': PWM(Pin(20)),
-    'gripServo': PWM(Pin(22))
+    'gripServo': PWM(Pin(21))
 }
 
 # Function to set the PWM frequency and duty cycle for a servo
@@ -66,7 +66,7 @@ def defualtPos():
     smoothMoveServo('midServo', 80, stepDelay=0.05)
     smoothMoveServo('topServo', 85, stepDelay=0.05)
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.05)
-    smoothMoveServo('gripServo', 60, stepDelay=0.03)
+    smoothMoveServo('gripServo', 100, stepDelay=0.03)
 
     sleep(2)
     searchForMat()
@@ -77,6 +77,7 @@ def searchForMat():
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
     smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('topServo', 20, stepDelay=0.05)
+    smoothMoveServo('gripServo', 110, stepDelay=0.03)
     sleep(15)
 
 # Function to smoothly pick up a metal object in front of the robotic arm
@@ -88,9 +89,9 @@ def pickUpMetal():
     smoothMoveServo('gripBaseServo', 90, stepDelay=0.03)  # Adjust grip position
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
-    smoothMoveServo('midServo', 100, stepDelay=0.05)
+    smoothMoveServo('midServo', 135, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
-    smoothMoveServo('gripServo', 90, stepDelay=0.03) # closed
+    smoothMoveServo('gripServo', 110, stepDelay=0.03) # closed
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
@@ -109,13 +110,13 @@ def pickUpCardboard():
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
     smoothMoveServo('midServo', 115, stepDelay=0.05)
-    smoothMoveServo('btmServo', 90, stepDelay=0.05)
+    smoothMoveServo('btmServo', 70, stepDelay=0.05)
     smoothMoveServo('gripServo', 120, stepDelay=0.03) # closed grip
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('btmServo', 100, stepDelay=0.05)
-    smoothMoveServo('baseServo', 35, stepDelay=0.05)
+    smoothMoveServo('baseServo', 15, stepDelay=0.05)
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
 
     defualtPos()
@@ -129,12 +130,12 @@ def pickUpPlastic():
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
     smoothMoveServo('midServo', 135, stepDelay=0.05)
-    smoothMoveServo('btmServo', 90, stepDelay=0.05)
-    smoothMoveServo('gripServo', 90, stepDelay=0.03) # closed grip
+    smoothMoveServo('btmServo', 85, stepDelay=0.05)
+    smoothMoveServo('gripServo', 110, stepDelay=0.03) # closed grip
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
-    smoothMoveServo('btmServo', 70, stepDelay=0.05)
+    smoothMoveServo('btmServo', 85, stepDelay=0.05)
     smoothMoveServo('baseServo', 50, stepDelay=0.05)
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
 
@@ -149,13 +150,13 @@ def pickUpPaper():
     smoothMoveServo('gripServo', 60, stepDelay=0.03) # open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
     smoothMoveServo('midServo', 135, stepDelay=0.05)
-    smoothMoveServo('btmServo', 90, stepDelay=0.05)
+    smoothMoveServo('btmServo', 80, stepDelay=0.05)
     smoothMoveServo('gripServo', 120, stepDelay=0.03) # closed grip
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('btmServo', 100, stepDelay=0.05)
-    smoothMoveServo('baseServo', 120, stepDelay=0.05)
+    smoothMoveServo('baseServo', 115, stepDelay=0.05)
     smoothMoveServo('gripServo', 50, stepDelay=0.03) # open grip
 
     defualtPos()
@@ -169,13 +170,13 @@ def pickUpGlass():
     smoothMoveServo('gripServo', 60, stepDelay=0.03)# open grip
     smoothMoveServo('topServo', 20, stepDelay=0.05)
     smoothMoveServo('midServo', 135, stepDelay=0.05)
-    smoothMoveServo('btmServo', 90, stepDelay=0.05)
+    smoothMoveServo('btmServo', 80, stepDelay=0.05)
     smoothMoveServo('gripServo', 90, stepDelay=0.03) #closed grip
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
     smoothMoveServo('btmServo', 100, stepDelay=0.05)
-    smoothMoveServo('baseServo', 5, stepDelay=0.05)
+    smoothMoveServo('baseServo', 20, stepDelay=0.05)
     smoothMoveServo('gripServo', 50, stepDelay=0.03) #open grip
 
     defualtPos()
@@ -192,26 +193,26 @@ while True:
     if matID == b'6510':
         print("Cardboard detected")
         pickUpCardboard()
-        sleep(40)
+        #sleep(20)
     elif matID == b'6610':
         print("Glass detected")
         pickUpGlass()
-        sleep(40)
+        #sleep(20)
     elif matID == b'6710':
         print("Metal detected")
         pickUpMetal()
-        sleep(40)
+        #sleep(30)
     elif matID == b'6810': 
         print("Paper detected")
         pickUpPaper()
-        sleep(40)
+        #sleep(30)
     elif matID == b'6910':
         print("Plastic detected")
         pickUpPlastic()
-        sleep(40)
+        #sleep(20)
     else:
         print(f"Unknown object: {matID}")
-        sleep(40)
+        #sleep(35)
         defualtPos()
 
-    sleep(2)
+    sleep(10)

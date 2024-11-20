@@ -5,13 +5,13 @@ import serial
 import time
 
 # Load our custom model
-model = YOLO("../runs/detect/train2/weights/best.pt")
+model = YOLO("../runs/detect/train/weights/best.pt")
 
 ser = serial.Serial("COM13", 9600, timeout=1)
 
 # Start video stream and FPS counter
 cap = cv2.VideoCapture(1)
-cooldown = 35
+cooldown = 32
 
 lastDetectedTime = time.time()
 
