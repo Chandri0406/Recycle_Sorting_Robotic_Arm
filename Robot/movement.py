@@ -91,7 +91,7 @@ def pickUpMetal():
     smoothMoveServo('topServo', 20, stepDelay=0.05)
     smoothMoveServo('midServo', 135, stepDelay=0.05)
     smoothMoveServo('btmServo', 90, stepDelay=0.05)
-    smoothMoveServo('gripServo', 110, stepDelay=0.03) # closed
+    smoothMoveServo('gripServo', 120, stepDelay=0.03) # closed
 
     # Drop into selected area
     smoothMoveServo('midServo', 100, stepDelay=0.05)
@@ -183,6 +183,19 @@ def pickUpGlass():
 
 # Loop through different actions
 while True:
+    sleep(2)
+    defualtPos()
+    sleep(3)
+    pickUpCardboard()
+    sleep(3)
+    pickUpMetal()
+    sleep(3)
+    pickUpPaper()
+    sleep(3)
+    pickUpPlastic()
+    sleep(3)
+    pickUpGlass()
+    '''
     matID = None
 
     if uart.any():
@@ -216,3 +229,4 @@ while True:
         defualtPos()
 
     sleep(10)
+'''

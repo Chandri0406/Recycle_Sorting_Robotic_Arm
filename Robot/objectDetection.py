@@ -11,7 +11,7 @@ ser = serial.Serial("COM13", 9600, timeout=1)
 
 # Start video stream and FPS counter
 cap = cv2.VideoCapture(1)
-cooldown = 32
+cooldown = 40
 
 lastDetectedTime = time.time()
 
